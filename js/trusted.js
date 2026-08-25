@@ -70,6 +70,12 @@ const subsectionCurrent = document.querySelector("[data-subsection-current]");
 const subsectionCarousel = document.querySelector("[data-subsection-carousel]");
 let activeSubsectionIndex = 0;
 
+const getSubsectionHeight = (card) => {
+  if (card.classList.contains("trust-channel-social")) return "clamp(680px, 165vw, 760px)";
+  if (card.classList.contains("trust-channel-google")) return "clamp(620px, 145vw, 700px)";
+  return "clamp(640px, 150vw, 720px)";
+};
+
 const showSubsection = (nextIndex) => {
   if (!subsectionCards.length) return;
 
@@ -84,8 +90,11 @@ const showSubsection = (nextIndex) => {
   if (subsectionCarousel) {
     const progress = ((activeSubsectionIndex + 1) / subsectionCards.length) * 100;
     subsectionCarousel.style.setProperty("--channel-progress", `${progress}%`);
+    subsectionCarousel.style.setProperty("--active-channel-height", getSubsectionHeight(subsectionCards[activeSubsectionIndex]));
   }
 };
+
+showSubsection(activeSubsectionIndex);
 
 subsectionPrevButtons.forEach((button) => button.addEventListener("click", () => {
   showSubsection(activeSubsectionIndex - 1);

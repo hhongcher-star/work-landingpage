@@ -615,6 +615,7 @@
   margin: 0 auto;
   display: block;
   --channel-progress: 33.333%;
+  --active-channel-height: 620px;
 }
 
 .trust-subsection-track {
@@ -2223,16 +2224,16 @@
 
   .trust-subsection-carousel {
     width: 100%;
-    min-height: calc(clamp(760px, 182vw, 860px) + 126px);
+    min-height: calc(var(--active-channel-height) + 126px);
   }
 
   .trust-subsection-track {
-    min-height: clamp(760px, 182vw, 860px);
+    min-height: var(--active-channel-height);
   }
 
   .trust-subsection-track > article.trust-channel-card {
     width: min(94vw, 500px);
-    min-height: clamp(760px, 182vw, 860px);
+    min-height: var(--active-channel-height);
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -2339,7 +2340,7 @@
   }
 
   .trust-channel-referral .trust-channel-copy {
-    min-height: calc(clamp(760px, 182vw, 860px) - 60px);
+    min-height: calc(var(--active-channel-height) - 60px);
     max-width: min(48vw, 230px);
   }
 
