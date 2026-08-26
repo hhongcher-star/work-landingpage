@@ -814,19 +814,6 @@
   }
 }
 
-@keyframes trust-referral-group {
-  0%,
-  68%,
-  100% {
-    gap: 0;
-  }
-
-  76%,
-  84% {
-    gap: 4px;
-  }
-}
-
 .trust-mini-flow > span,
 .trust-mini-options span {
   min-width: 68px;
@@ -858,7 +845,7 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  animation: trust-referral-group 7s ease-in-out infinite;
+  gap: 0;
 }
 
 .trust-mini-avatars img {
