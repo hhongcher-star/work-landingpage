@@ -1,3 +1,8 @@
+if (/^https?:$/.test(window.location.protocol) && /\/index\.html$/i.test(window.location.pathname)) {
+  const cleanPath = window.location.pathname.replace(/\/index\.html$/i, "/");
+  window.history.replaceState(null, "", `${cleanPath}${window.location.search}${window.location.hash}`);
+}
+
 const heroSlide = document.querySelector('[data-phone-slide="hero"]');
 const caseSlide = document.querySelector('[data-phone-slide="case"]');
 const auditModal = document.querySelector("[data-audit-modal]");
