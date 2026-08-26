@@ -11,6 +11,7 @@ const auditForm = document.querySelector("[data-audit-form]");
 const auditCloseButtons = document.querySelectorAll("[data-audit-close]");
 const auditStatus = document.querySelector("[data-audit-status]");
 const requirementChecks = Array.from(document.querySelectorAll("[data-requirement-check]"));
+const requirementsForm = document.querySelector("[data-requirements-form]");
 const requirementsStatus = document.querySelector("[data-requirements-status]");
 const requirementsSection = document.querySelector("#requirements");
 // Replace these values with the Google Form formResponse URL and entry IDs.
@@ -160,14 +161,34 @@ const allRequirementsChecked = () => {
   return requirementChecks.length > 0 && requirementChecks.every((checkbox) => checkbox.checked);
 };
 
-const updateRequirementsStatus = (blocked = false) => {
+let requirementsStatusTimer = null;
+
+const clearRequirementsStatus = () => {
   if (!requirementsStatus) return;
 
-  requirementsStatus.classList.toggle("is-ready", allRequirementsChecked());
-  requirementsStatus.classList.toggle("is-blocked", blocked && !allRequirementsChecked());
-  requirementsStatus.textContent = allRequirementsChecked()
-    ? "You can now book your free page audit."
-    : "Tick all requirements before booking your free page audit.";
+  window.clearTimeout(requirementsStatusTimer);
+  requirementsForm?.classList.remove("is-blocked");
+  requirementsStatus.classList.remove("is-visible", "is-blocked");
+  requirementsStatus.textContent = "";
+};
+
+const showRequirementsWarning = () => {
+  if (!requirementsStatus) return;
+
+  window.clearTimeout(requirementsStatusTimer);
+  requirementsForm?.classList.add("is-blocked");
+  requirementsStatus.textContent = "Tick all requirements before booking your free page audit.";
+  requirementsStatus.classList.add("is-visible", "is-blocked");
+
+  requirementsStatusTimer = window.setTimeout(() => {
+    requirementsStatus.classList.remove("is-visible");
+    requirementsForm?.classList.remove("is-blocked");
+
+    window.setTimeout(() => {
+      requirementsStatus.classList.remove("is-blocked");
+      requirementsStatus.textContent = "";
+    }, 320);
+  }, 3400);
 };
 
 const closeAuditModal = () => {
@@ -214,7 +235,7 @@ const buildWhatsappUrl = (formData) => {
 auditTriggers.forEach((trigger) => {
   trigger.addEventListener("click", () => {
     if (!allRequirementsChecked()) {
-      updateRequirementsStatus(true);
+      showRequirementsWarning();
       requirementsSection?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
@@ -224,10 +245,8 @@ auditTriggers.forEach((trigger) => {
 });
 
 requirementChecks.forEach((checkbox) => {
-  checkbox.addEventListener("change", () => updateRequirementsStatus(false));
+  checkbox.addEventListener("change", clearRequirementsStatus);
 });
-
-updateRequirementsStatus(false);
 
 auditCloseButtons.forEach((button) => {
   button.addEventListener("click", closeAuditModal);
