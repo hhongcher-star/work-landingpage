@@ -596,24 +596,37 @@
 .trust-change-block p {
   margin: 0 0 24px;
   color: #C394FA;
-  font-size: var(--trust-type-kicker);
+  font-size: clamp(15px, 2vw, 20px);
   font-weight: 900;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.08em;
 }
 
 .trust-change-block h3 {
-  max-width: 620px;
+  max-width: min(100%, 760px);
   margin: 0 auto;
   color: var(--trust-text);
   font-family: Inter, Arial, Helvetica, sans-serif;
-  font-size: var(--trust-type-title);
   font-weight: 900;
-  line-height: 1.02;
   letter-spacing: 0;
 }
 
+.trust-change-block h3 small {
+  display: block;
+  color: rgba(244, 244, 245, 0.94);
+  font-size: clamp(20px, 3.4vw, 30px);
+  font-weight: 800;
+  line-height: 1.12;
+}
+
 .trust-change-block h3 span {
+  display: block;
+  margin-top: 24px;
   color: #C394FA;
+  font-size: clamp(36px, 5.2vw, 52px);
+  font-weight: 900;
+  line-height: 0.98;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.18);
+  white-space: nowrap;
 }
 
 /* =========================
@@ -785,19 +798,19 @@
 @keyframes trust-referral-avatar {
   0% {
     opacity: 0;
-    transform: translateX(-10px) scale(0.84);
+    transform: scale(0.9);
   }
 
   10%,
   76% {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: scale(1);
   }
 
   90%,
   100% {
     opacity: 0;
-    transform: translateX(8px) scale(0.92);
+    transform: scale(0.94);
   }
 }
 
@@ -844,6 +857,7 @@
 .trust-mini-avatars {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   animation: trust-referral-group 7s ease-in-out infinite;
 }
 
@@ -854,7 +868,7 @@
   border-radius: 50%;
   object-fit: cover;
   opacity: 0;
-  transform: translateX(-10px) scale(0.84);
+  transform: scale(0.9);
   animation: trust-referral-avatar 7s ease-in-out infinite;
 }
 
@@ -3506,13 +3520,22 @@
 
   .trust-change-block p {
     margin-bottom: 18px;
-    font-size: var(--trust-type-kicker);
+    font-size: clamp(14px, 4vw, 18px);
   }
 
   .trust-change-block h3 {
-    max-width: 310px;
-    font-size: var(--trust-type-title);
-    line-height: 1.04;
+    max-width: 100%;
+  }
+
+  .trust-change-block h3 small {
+    font-size: 20px;
+    line-height: 1.15;
+  }
+
+  .trust-change-block h3 span {
+    margin-top: 22px;
+    font-size: clamp(28px, 8.6vw, 36px);
+    line-height: 0.98;
   }
 
   .trust-impact-section {
@@ -3662,18 +3685,8 @@
     gap: 18px;
   }
 
-  .trust-channel-google .trust-card-kicker {
-    order: 1;
-    margin: 14px 96px 14px 0;
-  }
-
   .trust-channel-social {
     gap: 22px;
-  }
-
-  .trust-channel-social .trust-card-kicker {
-    order: 1;
-    margin: 14px 96px 12px 0;
   }
 
   .trust-audience-map {
