@@ -1208,6 +1208,53 @@
   font-weight: 900;
 }
 
+.trust-impact-eyebrow {
+  margin: 0 0 24px;
+  color: #C394FA;
+  font-size: var(--trust-type-kicker);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.trust-impact-statements {
+  margin-top: 34px;
+  display: grid;
+  gap: 12px;
+}
+
+.trust-impact-statements > p {
+  margin: 0;
+  color: var(--trust-text);
+  font-size: clamp(20px, 3.7vw, 30px);
+  line-height: 1.1;
+}
+
+.trust-impact-statements > p strong {
+  font-weight: 900;
+}
+
+.trust-impact-question {
+  margin-top: 18px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(244, 244, 245, 0.14);
+}
+
+.trust-impact-question p {
+  margin: 0;
+  color: var(--trust-muted);
+  font-size: var(--trust-type-body);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.trust-impact-question blockquote {
+  margin: 14px 0;
+  color: #C394FA;
+  font-size: clamp(28px, 6vw, 46px);
+  font-weight: 900;
+  line-height: 1;
+}
+
 .trust-impact-because {
   margin-top: 34px;
 }
