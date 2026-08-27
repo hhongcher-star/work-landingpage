@@ -91,9 +91,47 @@ const bindScrollActiveCards = (selector, itemSelector) => {
   });
 };
 
+const bindFlyingCardCarousel = (selector, itemSelector, interval = 2000) => {
+  document.querySelectorAll(selector).forEach((carousel) => {
+    const items = Array.from(carousel.querySelectorAll(itemSelector));
+    if (items.length < 2) return;
+
+    let activeIndex = 0;
+    let timer = null;
+    let exitTimer = null;
+
+    const render = (exitingIndex = null) => {
+      items.forEach((item, index) => {
+        item.classList.toggle("is-active", index === activeIndex);
+        item.classList.toggle("is-exiting", index === exitingIndex);
+      });
+    };
+
+    const advance = () => {
+      const previousIndex = activeIndex;
+      activeIndex = (activeIndex + 1) % items.length;
+      render(previousIndex);
+
+      window.clearTimeout(exitTimer);
+      exitTimer = window.setTimeout(() => render(), 700);
+    };
+
+    const restart = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(advance, interval);
+    };
+
+    render();
+    carousel.addEventListener("pointerdown", restart, { passive: true });
+    window.addEventListener("resize", restart);
+    restart();
+  });
+};
+
 bindScrollActiveCards(".trust-subsection-track", ".trust-channel-card");
 bindScrollActiveCards(".trust-case-posts", "article");
 bindScrollActiveCards(".trust-expansion-posts", "article");
+bindFlyingCardCarousel(".trust-doctor-compilation", "article", 2000);
 
 heroSlide?.classList.add("is-active");
 caseSlide?.classList.remove("is-active");
