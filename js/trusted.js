@@ -92,8 +92,8 @@ const bindScrollActiveCards = (selector, itemSelector) => {
 };
 
 bindScrollActiveCards(".trust-subsection-track", ".trust-channel-card");
-bindScrollActiveCards(".trust-case-posts", "a");
-bindScrollActiveCards(".trust-expansion-posts", "a");
+bindScrollActiveCards(".trust-case-posts", "article");
+bindScrollActiveCards(".trust-expansion-posts", "article");
 
 heroSlide?.classList.add("is-active");
 caseSlide?.classList.remove("is-active");

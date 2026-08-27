@@ -1196,20 +1196,20 @@
 }
 
 .trust-platform-row span {
-  width: 52px;
-  height: 52px;
+  width: auto;
+  height: auto;
   padding: 0;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(244, 244, 245, 0.16);
-  border-radius: 14px;
-  background: rgba(17, 22, 31, 0.88);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: rgba(244, 244, 245, 0.86);
 }
 
 .trust-platform-row img {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
 }
 
 .trust-system-panel {
@@ -1497,17 +1497,14 @@
   display: none;
 }
 
-.trust-case-posts a {
+.trust-case-posts article {
   position: relative;
   flex: 0 0 72%;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: var(--trust-text);
-  text-decoration: none;
   transition: transform 160ms ease, opacity 160ms ease;
-  touch-action: manipulation;
 }
 
 .trust-case-posts span {
@@ -1531,7 +1528,7 @@
   transition: border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.trust-case-posts a.is-active img {
+.trust-case-posts article.is-active img {
   border-color: rgba(195, 148, 250, 0.46);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
   filter: saturate(1.04) contrast(1.02);
@@ -1788,17 +1785,14 @@
   display: none;
 }
 
-.trust-expansion-posts a {
+.trust-expansion-posts article {
   position: relative;
   flex: 0 0 72%;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: var(--trust-text);
-  text-decoration: none;
   transition: transform 160ms ease, opacity 160ms ease;
-  touch-action: manipulation;
 }
 
 .trust-expansion-posts span {
@@ -1823,7 +1817,7 @@
   transition: border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.trust-expansion-posts a.is-active img {
+.trust-expansion-posts article.is-active img {
   border-color: rgba(195, 148, 250, 0.46);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
   filter: saturate(1.04) contrast(1.02);
@@ -2241,8 +2235,8 @@
 .trust-audit-close:active,
 .trust-requirements-form label:active,
 .trust-channel-card:active,
-.trust-case-posts a:active,
-.trust-expansion-posts a:active {
+.trust-case-posts article:active,
+.trust-expansion-posts article:active {
   transform: scale(0.975);
 }
 
@@ -2254,8 +2248,8 @@
 }
 
 .trust-channel-card:hover,
-.trust-case-posts a:hover,
-.trust-expansion-posts a:hover {
+.trust-case-posts article:hover,
+.trust-expansion-posts article:hover {
   transform: translateY(-2px);
 }
 
@@ -2589,14 +2583,13 @@
   }
 
   .trust-platform-row span {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: auto;
+    height: auto;
   }
 
   .trust-platform-row img {
-    width: 21px;
-    height: 21px;
+    width: 30px;
+    height: 30px;
   }
 
   .trust-system-panel {
