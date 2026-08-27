@@ -1,4 +1,11 @@
 /* Trust page concept */
+.trust-page-body,
+.trust-page-body *,
+.trust-page-body *::before,
+.trust-page-body *::after {
+  box-sizing: border-box;
+}
+
 .trust-page-body {
   --trust-bg: #0D0D0F;
   --trust-text: #F4F4F5;
@@ -14,6 +21,7 @@
   --trust-type-title-lg: clamp(38px, 5.8vw, 56px);
   --trust-type-card-title: clamp(28px, 4.8vw, 40px);
   --trust-type-number: clamp(38px, 7vw, 46px);
+  margin: 0;
   min-height: 100vh;
   font-family: Inter, Arial, Helvetica, sans-serif;
   color: var(--trust-text);
@@ -43,7 +51,7 @@
   margin: 0 auto;
   padding: clamp(24px, 4vw, 58px);
   display: grid;
-  grid-template-columns: minmax(320px, 0.82fr) minmax(360px, 1fr);
+  grid-template-columns: minmax(340px, 0.82fr) minmax(520px, 1fr);
   align-items: center;
   gap: clamp(28px, 6vw, 96px);
   overflow: hidden;
@@ -1056,9 +1064,9 @@
 .trust-impact-eyebrow {
   margin: 0 0 24px;
   color: #C394FA;
-  font-size: var(--trust-type-kicker);
+  font-size: 14px;
   font-weight: 900;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.28em;
   text-align: center;
 }
 
@@ -1439,9 +1447,9 @@
 .trust-end-goal-kicker {
   margin: 0 0 24px;
   color: #C394FA;
-  font-size: clamp(14px, 1.8vw, 18px);
+  font-size: 14px;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.28em;
   text-align: center;
 }
 
@@ -1628,13 +1636,15 @@
 .trust-case-study-inner h2 {
   margin: 0;
   color: var(--trust-text);
-  font-size: var(--trust-type-title);
+  font-size: clamp(30px, 4.2vw, 40px);
   font-weight: 900;
   line-height: 1.05;
+  text-align: center;
 }
 
 .trust-case-study-inner h2 span {
   color: #C394FA;
+  white-space: nowrap;
 }
 
 .trust-case-mockup {
@@ -1737,13 +1747,14 @@
 .trust-outlet-gallery {
   margin-top: 24px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
   gap: 12px;
 }
 
 .trust-outlet-gallery img {
   display: block;
-  width: 100%;
+  width: min(100%, 260px);
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border: 1px solid rgba(244, 244, 245, 0.14);
@@ -2859,7 +2870,7 @@
   }
 
   .trust-case-study-inner h2 {
-    font-size: var(--trust-type-title);
+    font-size: clamp(19px, 5.6vw, 24px);
   }
 
   .trust-case-mockup {
@@ -2881,6 +2892,11 @@
 
   .trust-outlet-gallery {
     margin-top: 22px;
+    grid-template-columns: 1fr;
+  }
+
+  .trust-outlet-gallery img {
+    width: min(82vw, 300px);
   }
 
   .trust-results-grid {
@@ -3028,6 +3044,12 @@
 
   .trust-problem-intro p {
     margin-bottom: 22px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+  }
+
+  .trust-impact-eyebrow,
+  .trust-end-goal-kicker {
     font-size: 12px;
     letter-spacing: 0.18em;
   }
@@ -3372,42 +3394,42 @@
 
 .trust-content-grid .trust-content-card {
   z-index: 1;
-  width: 30%;
+  width: min(23%, 154px);
   min-width: 0;
   border-radius: 18px;
 }
 
 .trust-content-grid .trust-content-card-reels {
-  left: -5%;
+  left: 1%;
   top: 4%;
   --float-rotate: -8deg;
 }
 
 .trust-content-grid .trust-content-card-patient {
-  right: -5%;
+  right: 1%;
   top: 5%;
   --float-rotate: 7deg;
 }
 
 .trust-content-grid .trust-content-card-appointment {
-  left: -4%;
-  bottom: 5%;
+  left: 2%;
+  bottom: 10%;
   --float-rotate: -8deg;
 }
 
 .trust-content-grid .trust-content-card-trust {
-  right: -4%;
-  bottom: 7%;
+  right: 2%;
+  bottom: 12%;
   --float-rotate: 8deg;
 }
 
 .trust-person {
   position: absolute;
   left: 50%;
-  top: 8%;
+  top: 9%;
   z-index: 5;
-  width: 60%;
-  height: 78%;
+  width: 54%;
+  height: 70%;
   transform: translateX(-50%);
 }
 
@@ -3440,9 +3462,9 @@
 .trust-person-caption {
   position: absolute;
   left: 50%;
-  top: 79%;
+  top: 68%;
   z-index: 6;
-  width: 70%;
+  width: 96%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3465,7 +3487,7 @@
 .trust-person-caption strong {
   display: block;
   order: 0;
-  font-size: clamp(42px, 6vw, 66px);
+  font-size: clamp(32px, 3.3vw, 42px);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: 0;
@@ -3477,9 +3499,9 @@
   display: block;
   order: 2;
   color: rgba(244, 244, 245, 0.88);
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.28em;
   line-height: 1.18;
   white-space: nowrap;
 }
@@ -3501,7 +3523,7 @@
   }
 
   .trust-person-caption {
-    top: 79%;
+    top: 83%;
     width: 92%;
     z-index: 9;
   }
@@ -3601,7 +3623,7 @@
   }
 
   .trust-person-caption {
-    top: 80%;
+    top: 84%;
   }
 
   .trust-person-caption strong {
