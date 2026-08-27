@@ -39,6 +39,62 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
+const revealSections = Array.from(document.querySelectorAll(".trust-page > section:not(.trust-hero-screen)"));
+
+if (revealSections.length) {
+  revealSections.forEach((section) => section.classList.add("trust-section-reveal"));
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    }, {
+      rootMargin: "0px 0px -12% 0px",
+      threshold: 0.12
+    });
+
+    revealSections.forEach((section) => revealObserver.observe(section));
+  } else {
+    revealSections.forEach((section) => section.classList.add("is-visible"));
+  }
+}
+
+const activateNearestCard = (scroller, itemSelector) => {
+  const items = Array.from(scroller.querySelectorAll(itemSelector));
+  if (!items.length) return;
+
+  const scrollerLeft = scroller.getBoundingClientRect().left;
+  const activeItem = items.reduce((nearest, item) => {
+    const currentDistance = Math.abs(item.getBoundingClientRect().left - scrollerLeft);
+    const nearestDistance = Math.abs(nearest.getBoundingClientRect().left - scrollerLeft);
+    return currentDistance < nearestDistance ? item : nearest;
+  }, items[0]);
+
+  items.forEach((item) => item.classList.toggle("is-active", item === activeItem));
+};
+
+const bindScrollActiveCards = (selector, itemSelector) => {
+  document.querySelectorAll(selector).forEach((scroller) => {
+    let activeTimer = null;
+    const update = () => {
+      window.clearTimeout(activeTimer);
+      activeTimer = window.setTimeout(() => activateNearestCard(scroller, itemSelector), 40);
+    };
+
+    activateNearestCard(scroller, itemSelector);
+    scroller.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+  });
+};
+
+bindScrollActiveCards(".trust-subsection-track", ".trust-channel-card");
+bindScrollActiveCards(".trust-case-posts", "a");
+bindScrollActiveCards(".trust-expansion-posts", "a");
+
 heroSlide?.classList.add("is-active");
 caseSlide?.classList.remove("is-active");
 
