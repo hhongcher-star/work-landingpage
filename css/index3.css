@@ -483,13 +483,13 @@
   flex: 0 0 92%;
   min-width: 0;
   scroll-snap-align: start;
+  aspect-ratio: 1170 / 909;
 }
 
 .trust-doctor-compilation img {
   display: block;
   width: 100%;
-  max-height: 420px;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   object-position: top center;
   border: 1px solid rgba(244, 244, 245, 0.14);
@@ -1233,14 +1233,18 @@
 }
 
 .trust-framework-list::before {
+  display: none;
+}
+
+.trust-system-card:not(:last-child)::before {
   content: "";
   position: absolute;
   left: calc(clamp(58px, 8vw, 82px) / 2);
-  top: 32px;
-  bottom: 32px;
+  top: calc(22px + (clamp(48px, 6vw, 62px) / 2));
+  bottom: calc((22px + (clamp(48px, 6vw, 62px) / 2)) * -1);
   display: block;
   width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(195, 148, 250, 0.86) 12%, rgba(106, 39, 220, 0.72) 88%, transparent);
+  background: linear-gradient(180deg, rgba(195, 148, 250, 0.86), rgba(106, 39, 220, 0.72));
   box-shadow: 0 0 22px rgba(195, 148, 250, 0.28);
   transform: translateX(-50%);
 }
@@ -2612,12 +2616,16 @@
   }
 
   .trust-framework-list::before {
+    display: none;
+  }
+
+  .trust-system-card:not(:last-child)::before {
     left: 24px;
-    top: 28px;
-    bottom: 50px;
+    top: 43px;
+    bottom: -43px;
     display: block;
     width: 3px;
-    background: linear-gradient(180deg, transparent, rgba(195, 148, 250, 0.95) 10%, rgba(168, 117, 255, 0.88) 88%, transparent);
+    background: linear-gradient(180deg, rgba(195, 148, 250, 0.95), rgba(168, 117, 255, 0.88));
     box-shadow: 0 0 18px rgba(195, 148, 250, 0.42);
   }
 
@@ -2977,10 +2985,6 @@
 
   .trust-doctor-compilation article {
     flex-basis: 94%;
-  }
-
-  .trust-doctor-compilation img {
-    max-height: 380px;
   }
 
   .trust-audience-map {
@@ -3436,17 +3440,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html {
     scroll-behavior: auto !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important;
   }
 
   .trust-section-reveal {
     opacity: 1;
     transform: none;
+    transition-duration: 1ms !important;
   }
 }
