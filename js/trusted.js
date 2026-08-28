@@ -5,7 +5,6 @@ if (/^https?:$/.test(window.location.protocol) && /\/index\.html$/i.test(window.
 
 const heroSlide = document.querySelector('[data-phone-slide="hero"]');
 const caseSlide = document.querySelector('[data-phone-slide="case"]');
-const heroScreen = document.querySelector(".trust-hero-screen");
 const auditModal = document.querySelector("[data-audit-modal]");
 const auditTriggers = document.querySelectorAll("[data-audit-trigger]");
 const auditForm = document.querySelector("[data-audit-form]");
@@ -62,34 +61,6 @@ if (revealSections.length) {
   } else {
     revealSections.forEach((section) => section.classList.add("is-visible"));
   }
-}
-
-if (heroScreen) {
-  let heroExitTicking = false;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  const syncHeroExit = () => {
-    heroExitTicking = false;
-
-    if (reducedMotion.matches) {
-      heroScreen.classList.remove("is-exiting");
-      return;
-    }
-
-    const exitPoint = window.innerHeight * 0.12;
-    heroScreen.classList.toggle("is-exiting", heroScreen.getBoundingClientRect().top < -exitPoint);
-  };
-
-  const requestHeroExitSync = () => {
-    if (heroExitTicking) return;
-    heroExitTicking = true;
-    window.requestAnimationFrame(syncHeroExit);
-  };
-
-  syncHeroExit();
-  window.addEventListener("scroll", requestHeroExitSync, { passive: true });
-  window.addEventListener("resize", requestHeroExitSync);
-  reducedMotion.addEventListener?.("change", syncHeroExit);
 }
 
 const activateNearestCard = (scroller, itemSelector) => {
