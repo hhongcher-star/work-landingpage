@@ -1232,10 +1232,6 @@
   overflow: hidden;
 }
 
-.trust-impact-metric-card .trust-impact-ad-spend {
-  white-space: nowrap;
-}
-
 .trust-system-inner {
   width: min(100%, 1120px);
   margin: 0 auto;
@@ -1856,10 +1852,14 @@
   line-height: 1;
 }
 
+.trust-results-grid strong .trust-counter-value {
+  text-align: center;
+}
+
 .trust-counter-value.is-exiting,
 .trust-counter-value.is-entering {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 0;
   will-change: opacity, transform;
 }
@@ -2117,9 +2117,13 @@
 
 .trust-requirements-copy {
   margin-top: 34px;
+  text-align: center;
 }
 
 .trust-requirements-copy span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: rgba(244, 244, 245, 0.82);
   font-size: var(--trust-type-body);
   font-weight: 800;
@@ -2564,24 +2568,24 @@
 @keyframes trust-counter-exit {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(-85%);
+    transform: translateX(-50%) translateY(-85%);
   }
 }
 
 @keyframes trust-counter-enter {
   0% {
     opacity: 0;
-    transform: translateY(85%);
+    transform: translateX(-50%) translateY(85%);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
@@ -5499,8 +5503,13 @@
 .trust-marketing-warning {
   max-width: 620px;
   margin: 0 auto;
-  font-size: clamp(30px, 7.2vw, 48px);
-  line-height: 1.06;
+  font-size: clamp(28px, 6.4vw, 42px);
+  line-height: 1.1;
+}
+
+.trust-impact-enquiry > strong.trust-marketing-warning {
+  font-size: clamp(28px, 6.4vw, 42px);
+  line-height: 1.1;
 }
 
 .trust-marketing-warning span {
@@ -5637,6 +5646,13 @@
 
 .trust-sales-final {
   justify-items: center;
+}
+
+.trust-outlet-result::after {
+  content: "";
+  display: block;
+  height: clamp(15px, 3.6vw, 20px);
+  line-height: 1;
 }
 
 .trust-framework-showcase > img {

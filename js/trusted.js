@@ -138,6 +138,7 @@ caseSlide?.classList.remove("is-active");
 
 const animatedCounters = Array.from(document.querySelectorAll("[data-count-sequence]"));
 const resultsSection = document.querySelector(".trust-case-results");
+const resultsCounterTarget = document.querySelector(".trust-results-grid") || resultsSection;
 let counterAnimationRun = 0;
 let counterLoopTimer = null;
 
@@ -220,8 +221,6 @@ if (animatedCounters.length && resultsSection) {
 
     window.clearInterval(counterLoopTimer);
     counterLoopTimer = null;
-    counterAnimationRun += 1;
-    resetCounters();
   };
 
   if ("IntersectionObserver" in window) {
@@ -234,9 +233,12 @@ if (animatedCounters.length && resultsSection) {
 
         startCounterLoop();
       });
-    }, { threshold: 0.25 });
+    }, {
+      rootMargin: "0px 0px -6% 0px",
+      threshold: 0.01
+    });
 
-    counterObserver.observe(resultsSection);
+    counterObserver.observe(resultsCounterTarget);
   } else {
     startCounterLoop();
   }
