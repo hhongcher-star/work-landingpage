@@ -5735,3 +5735,11 @@
 .trust-channel-referral > .trust-card-kicker i {
   display: none !important;
 }
+
+.trust-channel-social,
+.trust-channel-social.is-active {
+  border-color: rgba(195, 148, 250, 0.72) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(195, 148, 250, 0.16),
+    0 18px 42px rgba(106, 39, 220, 0.2) !important;
+}
