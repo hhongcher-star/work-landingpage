@@ -1127,6 +1127,7 @@
 }
 
 .trust-impact-section h2 span {
+  display: block;
   color: #C394FA;
   font-weight: 900;
 }

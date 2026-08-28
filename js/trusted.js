@@ -166,17 +166,17 @@ const rollCounter = (counter, runId) => {
   const steps = getCounterSteps(counter);
   if (steps.length < 2) return;
 
-  const totalDuration = 5000;
-  const stepDelay = totalDuration / (steps.length - 1);
+  const stepDelays = [800, 800];
   let stepIndex = 0;
+  let timer = null;
 
   counter.classList.remove("is-final");
   counter.classList.add("is-rolling");
   renderCounterValue(counter, steps[0]);
 
-  const timer = window.setInterval(() => {
+  const advanceCounter = () => {
     if (runId !== counterAnimationRun) {
-      window.clearInterval(timer);
+      if (timer) window.clearTimeout(timer);
       return;
     }
 
@@ -189,15 +189,20 @@ const rollCounter = (counter, runId) => {
     `;
 
     if (stepIndex === steps.length - 1) {
-      window.clearInterval(timer);
       window.setTimeout(() => {
         if (runId !== counterAnimationRun) return;
 
         renderCounterValue(counter, steps[stepIndex]);
         counter.classList.add("is-final");
       }, 300);
+
+      return;
     }
-  }, stepDelay);
+
+    timer = window.setTimeout(advanceCounter, stepDelays[stepIndex] || 500);
+  };
+
+  timer = window.setTimeout(advanceCounter, stepDelays[0]);
 };
 
 resetCounters();
@@ -213,7 +218,7 @@ if (animatedCounters.length && resultsSection) {
     if (counterLoopTimer) return;
 
     playCounters();
-    counterLoopTimer = window.setInterval(playCounters, 9300);
+    counterLoopTimer = window.setInterval(playCounters, 4500);
   };
 
   const stopCounterLoop = () => {
