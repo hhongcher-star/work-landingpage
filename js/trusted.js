@@ -14,15 +14,9 @@ const requirementChecks = Array.from(document.querySelectorAll("[data-requiremen
 const requirementsForm = document.querySelector("[data-requirements-form]");
 const requirementsStatus = document.querySelector("[data-requirements-status]");
 const requirementsSection = document.querySelector("#requirements");
-// Replace these values with the Google Form formResponse URL and entry IDs.
-const googleFormConfig = {
-  action: "",
-  fields: {
-    name: "",
-    clinicName: "",
-    specialty: "",
-    mobileNo: ""
-  }
+// Replace this with the Google Apps Script Web App URL connected to your Google Sheet.
+const googleSheetConfig = {
+  action: "https://script.google.com/macros/s/AKfycbx_ztAQOWLYxf3lUhOIcrqGF0f7NZn-AmJqbqfu4nmoiiqZJ-lCh7HjCsutj7C-It8t/exec"
 };
 const whatsappNumber = "60102831433";
 
@@ -300,20 +294,29 @@ const closeAuditModal = () => {
   document.body.classList.remove("audit-modal-open");
 };
 
-const submitToGoogleForm = (formData) => {
-  if (!googleFormConfig.action) return Promise.resolve();
+const submitToGoogleSheet = (formData) => {
+  if (!googleSheetConfig.action) return Promise.resolve();
 
-  const googleData = new FormData();
-  Object.entries(googleFormConfig.fields).forEach(([fieldName, googleEntry]) => {
-    if (!googleEntry) return;
-    googleData.append(googleEntry, formData.get(fieldName) || "");
+  const sheetData = new FormData();
+  ["name", "clinicName", "specialty", "mobileNo", "crmInterest"].forEach((fieldName) => {
+    sheetData.append(fieldName, formData.get(fieldName) || "");
   });
 
-  return fetch(googleFormConfig.action, {
+  return fetch(googleSheetConfig.action, {
     method: "POST",
     mode: "no-cors",
-    body: googleData
+    body: sheetData
   });
+};
+
+const redirectToWhatsapp = (url) => {
+  if (auditStatus) {
+    auditStatus.textContent = "You are being redirected to WhatsApp...";
+  }
+
+  window.setTimeout(() => {
+    window.location.href = url;
+  }, 700);
 };
 
 const buildWhatsappUrl = (formData) => {
@@ -321,13 +324,15 @@ const buildWhatsappUrl = (formData) => {
   const clinicName = formData.get("clinicName")?.toString().trim();
   const specialty = formData.get("specialty")?.toString().trim();
   const mobileNo = formData.get("mobileNo")?.toString().trim();
+  const crmInterest = formData.get("crmInterest")?.toString().trim();
 
   const message = [
     "Hi USPify, I would like to book a free social media page audit.",
     name ? `Name: ${name}` : "",
     clinicName ? `Clinic Name: ${clinicName}` : "",
     specialty ? `Specialty: ${specialty}` : "",
-    mobileNo ? `Mobile No.: ${mobileNo}` : ""
+    mobileNo ? `Mobile No.: ${mobileNo}` : "",
+    crmInterest ? `Interested in CRM system: ${crmInterest}` : ""
   ].filter(Boolean).join("\n");
 
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -368,8 +373,8 @@ auditForm?.addEventListener("submit", async (event) => {
   if (auditStatus) auditStatus.textContent = "Submitting...";
 
   try {
-    await submitToGoogleForm(formData);
-    window.location.href = buildWhatsappUrl(formData);
+    await submitToGoogleSheet(formData);
+    redirectToWhatsapp(buildWhatsappUrl(formData));
   } catch (error) {
     if (auditStatus) {
       auditStatus.textContent = "Could not submit automatically. Please try again.";

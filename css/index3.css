@@ -2469,6 +2469,49 @@
   border-color: #C394FA;
 }
 
+.trust-audit-choice {
+  display: grid;
+  gap: 10px;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.trust-audit-choice legend {
+  margin: 0 0 2px;
+  padding: 0;
+  color: rgba(244, 244, 245, 0.78);
+  font-size: var(--trust-type-body-sm);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.trust-audit-choice legend span {
+  color: #C394FA;
+}
+
+.trust-audit-choice label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  color: var(--trust-text);
+  font-size: var(--trust-type-body-sm);
+  font-weight: 700;
+}
+
+.trust-audit-choice input[type="radio"] {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  accent-color: #C394FA;
+  cursor: pointer;
+}
+
 .trust-audit-form button {
   width: 100%;
   box-sizing: border-box;
@@ -2595,6 +2638,13 @@
   .trust-audit-form input {
     min-height: 42px;
     border-radius: 11px;
+  }
+
+  .trust-audit-choice input[type="radio"] {
+    width: 18px;
+    min-height: 18px;
+    height: 18px;
+    border-radius: 50%;
   }
 
   .trust-audit-form button {
