@@ -85,6 +85,291 @@ const bindScrollActiveCards = (selector, itemSelector) => {
   });
 };
 
+const bindTapToPlayVideos = (selector) => {
+  const cards = Array.from(document.querySelectorAll(selector));
+  if (!cards.length) return;
+
+  const stopControlEvent = (event) => event.stopPropagation();
+
+  const pauseVideo = (card) => {
+    const video = card.querySelector("video");
+    if (!video) return;
+
+    video.pause();
+    card.classList.remove("is-playing");
+  };
+
+  const toggleVideo = (card) => {
+    const video = card.querySelector("video");
+    if (!video) return;
+
+    if (video.paused) {
+      cards.forEach((item) => {
+        if (item !== card) pauseVideo(item);
+      });
+
+      video.play()
+        .then(() => card.classList.add("is-playing"))
+        .catch(() => card.classList.remove("is-playing"));
+    } else {
+      pauseVideo(card);
+    }
+  };
+
+  cards.forEach((card) => {
+    const video = card.querySelector("video");
+    if (!video) return;
+    if (card.querySelector(".trust-video-controls")) return;
+
+    const controls = document.createElement("div");
+    controls.className = "trust-video-controls";
+
+    const progress = document.createElement("input");
+    progress.className = "trust-video-progress";
+    progress.type = "range";
+    progress.min = "0";
+    progress.max = "1000";
+    progress.step = "1";
+    progress.value = "0";
+    progress.setAttribute("aria-label", "Video progress");
+    progress.disabled = true;
+
+    const expandButton = document.createElement("button");
+    expandButton.className = "trust-video-expand";
+    expandButton.type = "button";
+    expandButton.setAttribute("aria-label", "Expand video");
+
+    controls.append(progress, expandButton);
+    card.append(controls);
+
+    const updateProgress = () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      progress.disabled = false;
+      progress.value = String(Math.round((video.currentTime / video.duration) * 1000));
+    };
+
+    card.tabIndex = 0;
+    card.setAttribute("aria-label", `${video.getAttribute("aria-label") || "Video"}: tap to play or pause`);
+
+    card.addEventListener("click", (event) => {
+      if (event.target.closest(".trust-video-controls")) return;
+      toggleVideo(card);
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      if (event.target.closest(".trust-video-controls")) return;
+
+      event.preventDefault();
+      toggleVideo(card);
+    });
+
+    controls.addEventListener("click", stopControlEvent);
+    controls.addEventListener("pointerdown", stopControlEvent);
+
+    progress.addEventListener("input", (event) => {
+      event.stopPropagation();
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+
+      video.currentTime = (Number(progress.value) / 1000) * video.duration;
+      updateProgress();
+    });
+
+    expandButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen();
+        return;
+      }
+
+      video.controls = true;
+
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {
+          video.controls = false;
+        });
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+      } else {
+        video.controls = false;
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement !== video) {
+        video.controls = false;
+      }
+    });
+
+    video.addEventListener("webkitendfullscreen", () => {
+      video.controls = false;
+    });
+    video.addEventListener("loadedmetadata", updateProgress);
+    video.addEventListener("timeupdate", updateProgress);
+    video.addEventListener("pause", () => card.classList.remove("is-playing"));
+    video.addEventListener("play", () => card.classList.add("is-playing"));
+    video.addEventListener("ended", () => {
+      card.classList.remove("is-playing");
+      updateProgress();
+    });
+  });
+};
+
+const bindAutoImageCarousels = (selector) => {
+  document.querySelectorAll(selector).forEach((card) => {
+    const carousel = card.querySelector(".trust-image-carousel");
+    const slides = Array.from(card.querySelectorAll(".trust-image-carousel img"));
+    if (!carousel || slides.length < 2) return;
+    if (card.querySelector(".trust-carousel-controls")) return;
+
+    const interval = Number(card.dataset.carouselInterval) || 3000;
+    let activeIndex = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
+    let isPlaying = card.classList.contains("is-playing");
+    let startedAt = performance.now();
+    let pausedAt = 0;
+    let frameId = null;
+
+    const controls = document.createElement("div");
+    controls.className = "trust-carousel-controls";
+
+    const progress = document.createElement("div");
+    progress.className = "trust-carousel-progress";
+    progress.setAttribute("aria-hidden", "true");
+
+    const progressBar = document.createElement("span");
+    progress.append(progressBar);
+
+    const previousButton = document.createElement("button");
+    previousButton.className = "trust-carousel-nav trust-carousel-nav-prev";
+    previousButton.type = "button";
+    previousButton.setAttribute("aria-label", "Previous carousel slide");
+
+    const nextButton = document.createElement("button");
+    nextButton.className = "trust-carousel-nav trust-carousel-nav-next";
+    nextButton.type = "button";
+    nextButton.setAttribute("aria-label", "Next carousel slide");
+
+    const expandButton = document.createElement("button");
+    expandButton.className = "trust-video-expand trust-carousel-expand";
+    expandButton.type = "button";
+    expandButton.setAttribute("aria-label", "Expand carousel");
+
+    controls.append(progress, expandButton);
+    carousel.append(previousButton, nextButton);
+    carousel.append(controls);
+
+    const renderSlide = () => {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle("is-active", index === activeIndex);
+      });
+      card.setAttribute("aria-label", `Trust building carousel: slide ${activeIndex + 1} of ${slides.length}`);
+    };
+
+    const updateProgress = (now) => {
+      const elapsed = isPlaying ? now - startedAt : pausedAt;
+      const progressRatio = Math.min(elapsed / interval, 1);
+      progressBar.style.transform = `scaleX(${progressRatio})`;
+    };
+
+    const nextSlide = (now) => {
+      activeIndex = (activeIndex + 1) % slides.length;
+      startedAt = now;
+      pausedAt = 0;
+      renderSlide();
+    };
+
+    const showSlide = (index) => {
+      activeIndex = (index + slides.length) % slides.length;
+      startedAt = performance.now();
+      pausedAt = 0;
+      updateProgress(startedAt);
+      renderSlide();
+    };
+
+    const tick = (now) => {
+      if (isPlaying && now - startedAt >= interval) {
+        nextSlide(now);
+      }
+
+      updateProgress(now);
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    const play = () => {
+      if (isPlaying) return;
+
+      isPlaying = true;
+      startedAt = performance.now() - pausedAt;
+      card.classList.add("is-playing");
+    };
+
+    const pause = () => {
+      if (!isPlaying) return;
+
+      pausedAt = performance.now() - startedAt;
+      isPlaying = false;
+      card.classList.remove("is-playing");
+    };
+
+    const toggle = () => {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    };
+
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    renderSlide();
+
+    card.addEventListener("click", (event) => {
+      if (event.target.closest(".trust-carousel-controls")) return;
+      toggle();
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      if (event.target.closest(".trust-carousel-controls")) return;
+
+      event.preventDefault();
+      toggle();
+    });
+
+    controls.addEventListener("click", (event) => event.stopPropagation());
+    controls.addEventListener("pointerdown", (event) => event.stopPropagation());
+
+    [previousButton, nextButton].forEach((button) => {
+      button.addEventListener("click", (event) => event.stopPropagation());
+      button.addEventListener("pointerdown", (event) => event.stopPropagation());
+    });
+
+    previousButton.addEventListener("click", () => showSlide(activeIndex - 1));
+    nextButton.addEventListener("click", () => showSlide(activeIndex + 1));
+
+    expandButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen();
+        return;
+      }
+
+      if (carousel.requestFullscreen) {
+        carousel.requestFullscreen();
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      card.classList.toggle("is-fullscreen", document.fullscreenElement === carousel);
+    });
+
+    frameId = window.requestAnimationFrame(tick);
+    window.addEventListener("beforeunload", () => window.cancelAnimationFrame(frameId));
+  });
+};
+
 const bindFlyingCardCarousel = (selector, itemSelector, interval = 2000) => {
   document.querySelectorAll(selector).forEach((carousel) => {
     const items = Array.from(carousel.querySelectorAll(itemSelector));
@@ -125,6 +410,8 @@ const bindFlyingCardCarousel = (selector, itemSelector, interval = 2000) => {
 bindScrollActiveCards(".trust-subsection-track", ".trust-channel-card");
 bindScrollActiveCards(".trust-case-posts", "article");
 bindScrollActiveCards(".trust-expansion-posts", "article");
+bindTapToPlayVideos(".trust-video-card");
+bindAutoImageCarousels(".trust-image-carousel-card");
 bindFlyingCardCarousel(".trust-doctor-compilation", "article", 2000);
 
 heroSlide?.classList.add("is-active");
