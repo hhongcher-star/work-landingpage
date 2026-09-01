@@ -322,7 +322,9 @@ const bindAutoImageCarousels = (selector) => {
 
     card.tabIndex = 0;
     card.setAttribute("role", "button");
+    card.classList.toggle("is-playing", isPlaying);
     renderSlide();
+    updateProgress(performance.now());
 
     card.addEventListener("click", (event) => {
       if (event.target.closest(".trust-carousel-controls")) return;
