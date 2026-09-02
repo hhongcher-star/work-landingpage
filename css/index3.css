@@ -1870,6 +1870,7 @@
 .trust-video-card {
   cursor: pointer;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .trust-video-card video {
@@ -1910,6 +1911,16 @@
   border-radius: 50%;
   background: rgba(10, 10, 12, 0.66);
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.trust-video-expand:focus,
+.trust-video-expand:active {
+  outline: none;
+  box-shadow: none;
 }
 
 .trust-video-expand::before,
@@ -1984,6 +1995,8 @@
 .trust-image-carousel-card {
   cursor: pointer;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .trust-image-carousel {
@@ -1995,6 +2008,7 @@
   border-radius: 18px;
   background: #11161f;
   transition: border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .trust-image-carousel img {
@@ -2030,6 +2044,7 @@
   align-items: center;
   gap: 10px;
   opacity: 0.96;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .trust-carousel-progress {
@@ -2037,6 +2052,7 @@
   overflow: hidden;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.32);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .trust-carousel-progress span {
@@ -2060,8 +2076,18 @@
   border-radius: 50%;
   background: rgba(10, 10, 12, 0.54);
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
   transform: translateY(-50%);
   transition: background 160ms ease, border-color 160ms ease, opacity 160ms ease;
+}
+
+.trust-carousel-nav:focus,
+.trust-carousel-nav:active {
+  outline: none;
+  box-shadow: none;
 }
 
 .trust-carousel-nav:hover {
