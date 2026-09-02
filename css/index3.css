@@ -2228,6 +2228,7 @@
 }
 
 .trust-results-grid {
+  --trust-result-number-size: var(--trust-type-number);
   margin-top: 26px;
   padding-bottom: 0;
   display: grid;
@@ -2239,7 +2240,12 @@
 
 .trust-results-grid article {
   display: grid;
-  grid-template-rows: auto max-content max-content auto;
+  grid-template-rows:
+    1em
+    var(--trust-result-number-size)
+    0.8em
+    var(--trust-result-number-size)
+    minmax(clamp(15px, 3.6vw, 20px), auto);
   justify-items: center;
   align-items: start;
   gap: 12px;
@@ -2262,9 +2268,9 @@
 .trust-results-grid strong {
   position: relative;
   display: inline-block;
-  height: 1.08em;
+  height: 1em;
   color: var(--trust-text);
-  font-size: var(--trust-type-number);
+  font-size: var(--trust-result-number-size);
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
@@ -2272,7 +2278,7 @@
 }
 
 .trust-results-grid strong.is-rolling {
-  min-width: 4ch;
+  min-width: 2ch;
 }
 
 .trust-results-grid strong[data-count-sequence^="RM"].is-rolling {
@@ -2281,13 +2287,10 @@
 
 .trust-sales-final {
   display: grid;
+  grid-row: 4 / span 2;
   justify-items: center;
   align-self: start;
   gap: 4px;
-}
-
-.trust-sales-final strong {
-  font-size: clamp(42px, 10vw, 64px);
 }
 
 .trust-sales-final small {
@@ -4040,6 +4043,7 @@
 
   .trust-results-grid {
     gap: 14px;
+    --trust-result-number-size: clamp(34px, 10vw, 46px);
   }
 
   .trust-results-grid article + article {
@@ -4047,11 +4051,7 @@
   }
 
   .trust-results-grid strong {
-    font-size: clamp(34px, 10vw, 46px);
-  }
-
-  .trust-sales-final strong {
-    font-size: clamp(34px, 10vw, 44px);
+    font-size: var(--trust-result-number-size);
   }
 
   .trust-sales-final small {
@@ -5106,6 +5106,7 @@
     margin-top: 20px;
     padding-top: 18px;
     border-top: 1px solid rgba(244, 244, 245, 0.16);
+    --trust-result-number-size: clamp(48px, 3.8vw, 68px);
   }
 
   .trust-results-grid article {
@@ -5121,11 +5122,7 @@
   }
 
   .trust-results-grid strong {
-    font-size: clamp(48px, 3.8vw, 68px);
-  }
-
-  .trust-sales-final strong {
-    font-size: clamp(54px, 4.3vw, 76px);
+    font-size: var(--trust-result-number-size);
   }
 
   .trust-outlet-gallery {
@@ -5350,14 +5347,11 @@
   .trust-results-grid {
     margin-top: 16px;
     gap: 16px;
+    --trust-result-number-size: clamp(42px, 3.2vw, 58px);
   }
 
   .trust-results-grid strong {
-    font-size: clamp(42px, 3.2vw, 58px);
-  }
-
-  .trust-sales-final strong {
-    font-size: clamp(48px, 3.8vw, 66px);
+    font-size: var(--trust-result-number-size);
   }
 
   .trust-case-posts,
@@ -5712,12 +5706,12 @@
     font-size: clamp(28px, 2.3vw, 38px);
   }
 
-  .trust-results-grid strong {
-    font-size: clamp(38px, 3vw, 52px);
+  .trust-results-grid {
+    --trust-result-number-size: clamp(38px, 3vw, 52px);
   }
 
-  .trust-sales-final strong {
-    font-size: clamp(42px, 3.3vw, 58px);
+  .trust-results-grid strong {
+    font-size: var(--trust-result-number-size);
   }
 
   .trust-case-posts {
