@@ -2239,7 +2239,9 @@
 
 .trust-results-grid article {
   display: grid;
+  grid-template-rows: auto max-content max-content auto;
   justify-items: center;
+  align-items: start;
   gap: 12px;
   text-align: center;
 }
@@ -2253,6 +2255,7 @@
   color: rgba(244, 244, 245, 0.56);
   font-size: var(--trust-type-meta);
   font-weight: 800;
+  line-height: 1;
   letter-spacing: 0.08em;
 }
 
@@ -2279,6 +2282,7 @@
 .trust-sales-final {
   display: grid;
   justify-items: center;
+  align-self: start;
   gap: 4px;
 }
 
@@ -3583,11 +3587,11 @@
 
   .trust-expansion-posts {
     grid-column: 1;
-    grid-row: 1 / span 3;
+    grid-row: auto;
     margin-top: 0;
     padding-bottom: 0;
     display: grid;
-    grid-template-columns: minmax(300px, 1.12fr) minmax(210px, 0.88fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
     overflow: visible;
     scroll-snap-type: none;
@@ -3598,26 +3602,22 @@
     min-width: 0;
   }
 
-  .trust-expansion-posts article:first-child {
-    grid-row: span 2;
-  }
-
   .trust-expansion-posts img,
   .trust-expansion-posts .trust-image-carousel,
   .trust-expansion-posts video {
-    height: 100%;
-    min-height: 300px;
+    height: auto;
+    min-height: 0;
     aspect-ratio: 9 / 16;
   }
 
   .trust-expansion-posts article:first-child img,
   .trust-expansion-posts article:first-child .trust-image-carousel,
   .trust-expansion-posts article:first-child video {
-    min-height: 620px;
+    min-height: 0;
   }
 
   .trust-expansion-result {
-    grid-column: 2;
+    grid-column: 1 / -1;
     margin-top: 34px;
     text-align: left;
   }
@@ -5554,7 +5554,7 @@
   }
 
   .trust-impact-section {
-    padding: 104px 0 114px;
+    padding: 72px 0 82px;
   }
 
   .trust-impact-inner {
@@ -5562,42 +5562,42 @@
   }
 
   .trust-impact-section h2 {
-    max-width: 840px;
-    font-size: clamp(44px, 3.9vw, 60px);
+    max-width: 720px;
+    font-size: clamp(38px, 3.2vw, 50px);
     line-height: 1.04;
   }
 
   .trust-impact-statements {
-    margin-top: 40px;
-    gap: 24px;
+    margin-top: 30px;
+    gap: 18px;
   }
 
   .trust-impact-metric-card,
   .trust-impact-enquiry {
-    min-height: 244px;
-    padding: 30px;
+    min-height: 190px;
+    padding: 24px;
   }
 
   .trust-impact-metric-card strong {
-    font-size: clamp(58px, 5vw, 84px);
+    font-size: clamp(48px, 4.2vw, 68px);
   }
 
   .trust-impact-metric-card span,
   .trust-impact-enquiry > strong {
-    font-size: 17px;
+    font-size: 15px;
   }
 
   .trust-impact-metric-card p {
-    max-width: 230px;
-    font-size: clamp(24px, 2vw, 30px);
+    max-width: 210px;
+    font-size: clamp(21px, 1.7vw, 26px);
   }
 
   .trust-impact-whatsapp-card {
-    padding: 22px 24px 26px;
+    padding: 18px 22px 20px;
   }
 
   .trust-impact-whatsapp-card p {
-    font-size: clamp(30px, 3.2vw, 42px);
+    font-size: clamp(26px, 2.7vw, 36px);
   }
 
   .trust-system-section {
@@ -5690,7 +5690,7 @@
 
   .trust-case-study-section,
   .trust-expansion-section {
-    padding: 118px 0 128px;
+    padding: 64px 0 72px;
   }
 
   .trust-case-study-inner {
@@ -5700,12 +5700,12 @@
   }
 
   .trust-case-study-inner h2 {
-    font-size: clamp(36px, 3vw, 48px);
+    font-size: clamp(32px, 2.55vw, 42px);
     line-height: 1.04;
   }
 
   .trust-case-mockup {
-    max-width: 440px;
+    max-width: 360px;
   }
 
   .trust-case-results h3 {
@@ -5721,9 +5721,24 @@
   }
 
   .trust-case-posts {
-    grid-template-columns: minmax(260px, 0.98fr) minmax(210px, 0.82fr);
-    grid-template-rows: repeat(2, minmax(0, 285px));
+    grid-column: 1 / -1;
+    grid-row: auto;
+    grid-template-columns: repeat(3, minmax(0, 320px));
+    grid-template-rows: none;
+    justify-content: center;
     gap: 18px;
+  }
+
+  .trust-case-posts article:first-child {
+    grid-row: auto;
+  }
+
+  .trust-case-posts img,
+  .trust-case-posts video,
+  .trust-case-posts article:first-child img,
+  .trust-case-posts article:first-child video {
+    height: auto;
+    min-height: 0;
   }
 
   .trust-case-posts span,
@@ -5733,23 +5748,41 @@
 
   .trust-expansion-map {
     width: var(--trust-desktop-container);
-    grid-template-columns: minmax(0, 0.56fr) minmax(390px, 0.44fr);
+    grid-template-columns: 1fr;
     gap: 24px 58px;
   }
 
+  .trust-expansion-intro,
+  .trust-expansion-posts,
+  .trust-expansion-result {
+    grid-column: 1;
+  }
+
   .trust-expansion-posts {
-    grid-template-columns: minmax(260px, 0.98fr) minmax(210px, 0.82fr);
-    grid-template-rows: repeat(2, minmax(0, 285px));
+    grid-template-columns: repeat(3, minmax(0, 320px));
+    grid-template-rows: none;
+    justify-content: center;
     gap: 18px;
   }
 
+  .trust-expansion-posts img,
+  .trust-expansion-posts .trust-image-carousel,
+  .trust-expansion-posts video,
+  .trust-expansion-posts article:first-child img,
+  .trust-expansion-posts article:first-child .trust-image-carousel,
+  .trust-expansion-posts article:first-child video {
+    height: auto;
+    min-height: 0;
+  }
+
   .trust-expansion-intro h2 {
-    font-size: clamp(36px, 3vw, 48px);
+    font-size: clamp(34px, 2.65vw, 42px);
     line-height: 1.04;
   }
 
   .trust-expansion-mockup {
-    max-width: 460px;
+    max-width: 360px;
+    margin-top: 26px;
   }
 
   .trust-expansion-result p {
@@ -6032,6 +6065,13 @@
   display: block;
 }
 
+@media (min-width: 1024px) {
+  .trust-impact-enquiry > strong.trust-marketing-warning {
+    font-size: clamp(28px, 2.8vw, 38px);
+    line-height: 1.08;
+  }
+}
+
 @media (max-width: 767px) {
   .trust-lead {
     text-align: center;
@@ -6123,7 +6163,12 @@
   }
 
   .trust-referral-kicker {
+    width: 100%;
+    grid-column: 1 / -1;
+    align-self: center;
+    justify-self: center;
     margin-bottom: 26px;
+    text-align: center;
   }
 
   .trust-subsection-track {
@@ -6243,4 +6288,105 @@
   box-shadow:
     inset 0 0 0 1px rgba(195, 148, 250, 0.16),
     0 18px 42px rgba(106, 39, 220, 0.2) !important;
+}
+
+@media (min-width: 768px) {
+  .trust-case-study-inner,
+  .trust-expansion-inner,
+  .trust-expansion-map {
+    width: min(100% - 96px, 1120px);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .trust-case-study-inner,
+  .trust-expansion-map {
+    justify-items: center;
+  }
+
+  .trust-case-study-inner h2,
+  .trust-expansion-intro,
+  .trust-expansion-intro h2,
+  .trust-case-results,
+  .trust-results-kicker,
+  .trust-case-results h3,
+  .trust-expansion-result,
+  .trust-expansion-result p {
+    grid-column: 1 / -1;
+    justify-self: center;
+    align-self: center;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+
+  .trust-case-mockup,
+  .trust-expansion-mockup {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .trust-outlet-gallery,
+  .trust-results-grid,
+  .trust-case-posts,
+  .trust-expansion-posts,
+  .trust-expansion-flags {
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .trust-expansion-result p {
+    max-width: 580px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .trust-case-study-inner,
+  .trust-expansion-inner,
+  .trust-expansion-map {
+    width: min(100% - 128px, 1120px);
+  }
+
+  .trust-case-posts,
+  .trust-expansion-posts {
+    grid-template-columns: repeat(3, minmax(0, 300px));
+    gap: 18px;
+  }
+
+  .trust-case-posts article,
+  .trust-expansion-posts article {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  .trust-case-posts video,
+  .trust-expansion-posts video,
+  .trust-expansion-posts .trust-image-carousel {
+    width: 300px !important;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .trust-expansion-posts article.trust-image-carousel-card .trust-image-carousel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+
+  .trust-case-study-inner h2,
+  .trust-case-mockup,
+  .trust-case-results,
+  .trust-results-kicker,
+  .trust-expansion-intro,
+  .trust-expansion-mockup,
+  .trust-expansion-result {
+    grid-column: 1 / -1;
+  }
 }
