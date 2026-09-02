@@ -5061,29 +5061,11 @@
     overflow: hidden;
   }
 
-  .trust-conversation-card::after {
-    content: "";
-    position: absolute;
-    right: 26px;
-    bottom: 22px;
-    width: min(48%, 260px);
-    aspect-ratio: 1170 / 909;
-    background: url("../image/trust-ig-grid.png") center / cover no-repeat;
-    border: 1px solid rgba(244, 244, 245, 0.12);
-    border-radius: 12px;
-    opacity: 0.72;
-  }
-
-  .trust-conversation-card-positive::after {
-    background-image: url("../image/trust-ig-profile.png");
-    opacity: 0.82;
-  }
-
   .trust-question-list,
   .trust-answer-list {
     position: relative;
     z-index: 1;
-    max-width: 54%;
+    max-width: 100%;
   }
 
   .trust-question-list p,
@@ -5696,15 +5678,9 @@
     padding: 30px;
   }
 
-  .trust-conversation-card::after {
-    right: 28px;
-    bottom: 28px;
-    width: min(42%, 220px);
-  }
-
   .trust-question-list,
   .trust-answer-list {
-    max-width: 58%;
+    max-width: 100%;
   }
 
   .trust-question-list p,
@@ -6068,6 +6044,43 @@
 
   .trust-platform-row {
     width: fit-content;
+  }
+
+  .trust-case-study-section {
+    overflow-x: hidden;
+  }
+
+  .trust-case-study-inner,
+  .trust-case-results {
+    width: min(100%, 430px);
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .trust-case-results h3 {
+    max-width: min(100%, 390px);
+    margin-right: auto;
+    margin-left: auto;
+    white-space: normal;
+    overflow-wrap: normal;
+  }
+
+  .trust-outlet-gallery {
+    width: min(82vw, 320px);
+    margin-right: auto;
+    margin-left: auto;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    overflow: visible;
+  }
+
+  .trust-outlet-gallery img {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
   }
 }
 
