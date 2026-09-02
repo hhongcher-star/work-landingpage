@@ -1260,7 +1260,7 @@
 
   33%,
   100% {
-    max-width: 9ch;
+    max-width: 10.75ch;
   }
 }
 
@@ -1596,17 +1596,23 @@
   line-height: 1.36;
   opacity: 0;
   transform: translateY(12px);
-  animation: trust-message-loop-first 6s ease infinite;
+  animation: trust-message-without-one 9.6s ease infinite both;
 }
 
-.trust-question-list p:nth-child(2),
+.trust-question-list p:nth-child(2) {
+  animation-name: trust-message-without-two;
+}
+
+.trust-question-list p:nth-child(3) {
+  animation-name: trust-message-without-three;
+}
+
+.trust-answer-list p:nth-child(1) {
+  animation-name: trust-message-with-one;
+}
+
 .trust-answer-list p:nth-child(2) {
-  animation-name: trust-message-loop-second;
-}
-
-.trust-question-list p:nth-child(3),
-.trust-answer-list p:nth-child(3) {
-  animation-name: trust-message-loop-third;
+  animation-name: trust-message-with-two;
 }
 
 .trust-question-list p {
@@ -1622,6 +1628,106 @@
   padding: 16px 18px;
   border-radius: 10px;
   background: rgba(17, 22, 31, 0.34);
+}
+
+@keyframes trust-message-without-one {
+  0%,
+  5% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  10%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes trust-message-without-two {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  17%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes trust-message-without-three {
+  0%,
+  19% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  24%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes trust-message-with-one {
+  0%,
+  29% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  34%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes trust-message-with-two {
+  0%,
+  36% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  41%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
 @keyframes trust-message-loop-first {
@@ -2125,9 +2231,9 @@
   margin-top: 26px;
   padding-bottom: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.35fr) minmax(64px, 0.82fr) minmax(64px, 0.82fr);
   justify-items: center;
-  gap: 18px;
+  gap: 14px;
   border-bottom: 0;
 }
 
@@ -4982,9 +5088,6 @@
 
   .trust-question-list p,
   .trust-answer-list p {
-    opacity: 1;
-    transform: none;
-    animation: none;
     font-size: 20px;
   }
 
@@ -6085,7 +6188,8 @@
   justify-items: center;
 }
 
-.trust-outlet-result::after {
+.trust-outlet-result::after,
+.trust-team-result::after {
   content: "";
   display: block;
   height: clamp(15px, 3.6vw, 20px);
